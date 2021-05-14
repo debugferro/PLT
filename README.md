@@ -124,3 +124,10 @@ O external_code de ShipmentPayload é único, e não poderá haver outro igual. 
 # Personalização
 
 Para trocar a API do delivery center, é preciso editar a variável 'processor_url' no arquivo config/secrets.yml
+
+# Esquema Banco de Dados
+
+O banco de dados utiliza mongodb. O esquema utilizado foi o seguinte:
+
+![Captura de tela de 2021-05-14 02-27-30](https://user-images.githubusercontent.com/67886352/118225815-2bd06280-b45c-11eb-868d-324046244b89.png)
+
