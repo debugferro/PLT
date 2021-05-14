@@ -119,7 +119,7 @@ Envie uma post request para a url:
 
 Todo payload é armazenado no modelo ShipmentPayload, que guarda os dados principais. Dados mais específicos são armazenados nas relações de ShipmentPayload, que são: OrderItem, Payment, Customer e Shipment.
 
-O external_code de ShipmentPayload é único, e não haverá outro igual. Caso já exista um com o mesmo external_code (vulgo ID), o programa não criará outro registro, apenas enviará a já existente para a API do delivery center.
+O external_code de ShipmentPayload é único, e não poderá haver outro igual. Ele é referência para a verificação da existência ou inexistência de um registro. Caso já exista um record com o mesmo external_code (vulgo ID), o programa não criará outro registro, apenas enviará o já existente para a API do delivery center.
 
 # Utilização
 
