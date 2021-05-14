@@ -121,6 +121,6 @@ Todo payload é armazenado no modelo ShipmentPayload, que guarda os dados princi
 
 O external_code de ShipmentPayload é único, e não poderá haver outro igual. Ele é referência para a verificação da existência ou inexistência de um registro. Caso já exista um record com o mesmo external_code (vulgo ID), o programa não criará outro registro, apenas enviará o já existente para a API do delivery center.
 
-# Utilização
+# Personalização
 
 Para trocar a API do delivery center, é preciso editar a variável 'processor_url' no arquivo config/secrets.yml
