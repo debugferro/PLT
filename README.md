@@ -12,7 +12,7 @@ Inicie o servidor:
 ```
 rails s
 ```
-# Utilização
+# Testes
 Testes foram feitos com o framework Rspec. No terminal digite para executar:
 ```
 rspec
