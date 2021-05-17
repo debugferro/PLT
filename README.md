@@ -13,6 +13,12 @@ Inicie o servidor:
 rails s
 ```
 # Utilização
+Testes foram feitos com o framework Rspec. No terminal digite para executar:
+```
+rspec
+```
+
+# Utilização
 
 Envie uma post request para a url:
 ```
