@@ -1,3 +1,5 @@
+DOC_TYPES = ["RNE", "CPF", "CTPS", "RG"]
+
 STATES = [
     ["Acre", "AC"],
     ["Alagoas", "AL"],

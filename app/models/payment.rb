@@ -17,6 +17,9 @@ class Payment
 
   belongs_to :shipment_payloads, class_name: 'ShipmentPayload', inverse_of: :payments
 
+  validates :order_id, :payer_id, uniqueness: true, presence: true, numericality: true
+  validate :check_date_format
+
   def self.map_attributes(payments)
     keys = Payment.attribute_names
     keys = keys.slice(3..keys.length).map(&:to_sym)
@@ -29,10 +32,32 @@ class Payment
     end
   end
 
+  def date_valid?(date)
+    DateTime.parse(date) rescue false
+  end
+
   def map_attributes
     {
       type: payment_type,
       value: total_paid_amount
     }
+  end
+
+  def check_date_format
+    date_approved_status = date_valid?(date_approved)
+    date_created_status = date_valid?(date_created)
+    return if date_approved_status && date_created_status
+
+    message = 'tem o formato invalido.'
+    unless date_approved_status
+      errors.add(:date_approved,
+                 :date_format,
+                 message: message)
+    end
+    unless date_created_status
+      errors.add(:date_created,
+                 :date_format,
+                 message: message)
+    end
   end
 end

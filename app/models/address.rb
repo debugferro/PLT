@@ -18,13 +18,20 @@ class Address
 
   belongs_to :shipments, class_name: 'Shipment', inverse_of: :address
 
+  validates_presence_of :shipments
+  validates :external_id, uniqueness: true, presence: true, numericality: { only_integer: true }
+  validates :zip_code, numericality: { only_integer: true }
+  validates :street_number, numericality: { only_integer: true }
+  validates :state, inclusion: { in: STATES.flatten }
+
   def self.map_attributes(address)
-    keys = %i[external_id address_line street_name street_number comment zip_code latitude longitude]
+    keys = %i[address_line street_name street_number comment zip_code latitude longitude]
     address_mapped = {}
     keys.each do |key|
       address_mapped[key] = address[key]
     end
-    address_mapped.merge!({ city_name: address[:city][:name],
+    address_mapped.merge!({ external_id: address[:id],
+                            city_name: address[:city][:name],
                             state: address[:state][:name],
                             country: address[:country][:name],
                             country_id: address[:country][:id],

@@ -10,8 +10,7 @@ RSpec.configure do |config|
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
-
-  config.before(:suite) do
+  config.before(:each) do
     DatabaseCleaner[:mongoid].strategy = :deletion
   end
   config.before(:each) do

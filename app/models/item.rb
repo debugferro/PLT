@@ -8,6 +8,9 @@ class Item
 
   belongs_to :order_item, class_name: "OrderItem", inverse_of: :item
 
+  validates :external_code, presence: true, uniqueness: true
+  validates_presence_of :order_item
+
   def self.map_attributes(item)
     {
       external_code: item[:id],

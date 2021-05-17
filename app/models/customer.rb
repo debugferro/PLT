@@ -14,6 +14,12 @@ class Customer
 
   belongs_to :shipment_payloads, class_name: 'ShipmentPayload', inverse_of: :customer
 
+  validates_presence_of :shipment_payloads
+  validates :phone_number, numericality: { only_integer: true }
+  validates :external_code, numericality: { only_integer: true }
+  validates :doc_number, numericality: { only_integer: true }
+  validates :doc_type, inclusion: { in: DOC_TYPES }
+
   def self.map_attributes(customer)
     {
       external_code: customer[:id],

@@ -4,7 +4,7 @@ class Api::ShipmentPayloadsController < ApplicationController
     shipment = shipment.first_or_create(build_params)
 
     shipment.save
-    return render json: { messages: shipment.errors.full_messages } unless shipment.persisted?
+    return render json: shipment.map_errors unless shipment.persisted?
 
     shipment_data = shipment.map_attributes
     processor = Processor.new

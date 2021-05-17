@@ -10,6 +10,7 @@ class OrderItem
   belongs_to :shipment_payloads, class_name: 'ShipmentPayload', inverse_of: :order_items
 
   accepts_nested_attributes_for :item
+  validates_presence_of :shipment_payloads
 
   def self.map_attributes(order_items)
     order_items.map do |order|

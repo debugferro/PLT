@@ -20,7 +20,8 @@ class ShipmentPayload
   has_one :customer
   has_one :shipment
 
-  validates :external_code, uniqueness: true, presence: true
+  validates :external_code, :store_id, uniqueness: true, presence: true, numericality: true
+  validate :check_date_format
 
   accepts_nested_attributes_for :order_items
   accepts_nested_attributes_for :payments
@@ -40,5 +41,42 @@ class ShipmentPayload
       items: order_items.map(&:map_attributes),
       payments: payments.map(&:map_attributes)
     }.merge(shipment.address.map_attributes)
+  end
+
+  def date_valid?(date)
+    DateTime.parse(date) rescue false
+  end
+
+  def check_date_format
+    date_created_status = date_valid?(date_created)
+    date_closed_status = date_valid?(date_closed)
+    return if date_created_status && date_closed_status
+
+    message = 'tem o formato invalido.'
+    unless date_created_status
+      errors.add(:date_created,
+                :date_format,
+                message: message)
+    end
+    unless date_closed_status
+      errors.add(:date_closed,
+                :date_format,
+                message: message)
+    end
+  end
+
+  def map_errors
+    main_message = { messages: errors.full_messages }
+    full_messages = {}
+    attributes_with_errors = errors.keys
+    attributes_with_errors.each do |attribute_with_error|
+      attribute = public_send(attribute_with_error)
+      if attribute.is_a?(Array)
+        full_messages[attribute_with_error] = attribute.map(&:errors).map(&:full_messages).flatten
+      else
+        full_messages[attribute_with_error] = attribute.errors.full_messages
+      end
+    end
+    main_message.merge({ attributes: attributes_with_errors, full_messages: full_messages })
   end
 end
